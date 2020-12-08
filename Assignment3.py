@@ -17,8 +17,22 @@ def GenderOneHot(gender):
     else:
         return 1
 
+def VehicleAgeOneHot(vehicleAge):
+    if vehicleAge == '> 2 Years':
+        return 1
 
+    elif vehicleAge == '1-2 Year':
+        return 0.5
 
+    else:
+        return 0
+
+def VehicleDamageOneHot(vehicleDamage):
+    if vehicleDamage == 'Yes':
+        return 1
+
+    else:
+        return 0
 
 import math
 import pandas as pd
@@ -41,3 +55,16 @@ df = pd.read_csv('training_data.csv')
 # driving_license.to_csv('licenses.csv', index = False)
 
 ''' Region Code '''
+# regions = df["Region_Code"]
+# new_regions = stats.zscore(regions)
+# df_regions = pd.DataFrame(new_regions, columns=['Region Code'])
+
+''' Vehicle Age '''
+# vehicle_age = df["Vehicle_Age"].apply(VehicleAgeOneHot)
+# vehicle_age.to_csv('vehicle_ages.csv', index = False)
+
+''' Vehicle Damage '''
+# vehicle_damage = df["Vehicle_Damage"].apply(VehicleDamageOneHot)
+# vehicle_damage.to_csv('vehicle_damages.csv', index = False)
+
+''' Annual Premium '''
