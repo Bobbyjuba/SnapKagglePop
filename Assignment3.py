@@ -68,3 +68,16 @@ df = pd.read_csv('training_data.csv')
 # vehicle_damage.to_csv('vehicle_damages.csv', index = False)
 
 ''' Annual Premium '''
+# premiums = df["Annual_Premium"]
+# new_premiums = stats.zscore(premiums)
+# df_premiums = pd.DataFrame(new_premiums, columns=['Annual Premium'])
+
+''' Policy Sales Channel '''
+# channel = df["Policy_Sales_Channel"]
+# new_channel = stats.zscore(channel)
+# df_channel = pd.DataFrame(new_channel, columns=['Policy Sales Channel'])
+
+''' Vintage '''
+# vintage = df["Vintage"]
+# new_vintage = stats.zscore(vintage)
+# df_vintage = pd.DataFrame(new_vintage, columns=['Vintage'])
