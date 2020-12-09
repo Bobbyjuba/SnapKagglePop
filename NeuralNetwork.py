@@ -89,16 +89,18 @@ df["Vintage"] = new_vintage
 
 # df.to_csv('new_data.csv', index = False)
 
-datasest = pd.read_csv('new_data.csv', header = None).values
+x = df.drop(['Response'], axis=1)
+y = df['Response']
 
-X_train, X_test, Y_train, Y_test = train_test_split(datasest[:,0:10], datasest[:,10], test_size=0.15)
+X_train, X_test, Y_train, Y_test = train_test_split(x, y, test_size=0.15, random_state = 52)
 
 nn = Sequential()
-nn.add(Dense(10, input_dim = 10, activation='relu'))
-nn.add(Dense(2, activation='sigmoid'))
+nn.add(Dense(1, input_dim = 10, activation='sigmoid'))
+# nn.add(Dense(1, activation='sigmoid'))
 
 nn.compile(loss='binary_crossentropy', optimizer='adam')
-nn_fitted = nn.fit(X_train, Y_train, epochs=100, verbose=0, initial_epoch=0)
+nn.fit(X_train, Y_train, epochs=3)
 
 print(nn.summary())
-print(nn.evaluate(X_test, Y_test))
+scores = nn.evaluate(X_test, Y_test)
+print("Accuracy: %.2f%%" % (scores * 100))
