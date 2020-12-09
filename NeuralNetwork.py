@@ -9,6 +9,17 @@
 #                                                                    #
 ######################################################################
 
+import math
+import pandas as pd
+import scipy.stats as stats
+import numpy as np
+import tensorflow as tf
+import keras
+
+from sklearn.model_selection import train_test_split
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+
 def RemoveID(ID):
     return ''
 
@@ -35,11 +46,6 @@ def VehicleDamageOneHot(vehicleDamage):
 
     else:
         return 0
-
-import math
-import pandas as pd
-import scipy.stats as stats
-import numpy as np
 
 df = pd.read_csv('training_data.csv')
 
@@ -82,3 +88,17 @@ new_vintage = stats.zscore(vintage)
 df["Vintage"] = new_vintage
 
 # df.to_csv('new_data.csv', index = False)
+
+datasest = pd.read_csv('new_data.csv', header = None).values
+
+X_train, X_test, Y_train, Y_test = train_test_split(datasest[:,0:10], datasest[:,10], test_size=0.15)
+
+nn = Sequential()
+nn.add(Dense(10, input_dim = 10, activation='relu'))
+nn.add(Dense(2, activation='sigmoid'))
+
+nn.compile(loss='binary_crossentropy', optimizer='adam')
+nn_fitted = nn.fit(X_train, Y_train, epochs=100, verbose=0, initial_epoch=0)
+
+print(nn.summary())
+print(nn.evaluate(X_test, Y_test))
